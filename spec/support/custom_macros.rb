@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 module CustomMacros
 
   def self.included(base)
@@ -7,6 +6,12 @@ module CustomMacros
   end
 
   module ClassMethods
+
+    def set_config(config_method_name, value)
+      old_value = Formtastic::FormBuilder.send(config_method_name)
+      before { Formtastic::FormBuilder.send(:"#{config_method_name}=", value) }
+      after { Formtastic::FormBuilder.send(:"#{config_method_name}=", old_value) }
+    end
 
     def it_should_have_input_wrapper_with_class(class_name)
       it "should have input wrapper with class '#{class_name}'" do
