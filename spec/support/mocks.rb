@@ -1,26 +1,19 @@
 # encoding: utf-8
-module FakeHelpersModule
-end
-
 module Mocks
-  include ActionPack
-  include ActionView::Context if defined?(ActionView::Context)
-  include ActionController::RecordIdentifier
-  include ActionView::Helpers::FormHelper
-  include ActionView::Helpers::FormTagHelper
-  include ActionView::Helpers::FormOptionsHelper
-  include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::TagHelper
-  include ActionView::Helpers::TextHelper
-  include ActionView::Helpers::ActiveRecordHelper if defined?(ActionView::Helpers::ActiveRecordHelper)
-  include ActionView::Helpers::ActiveModelHelper if defined?(ActionView::Helpers::ActiveModelHelper)
-  include ActionView::Helpers::DateHelper
-  include ActionView::Helpers::CaptureHelper
-  include ActionView::Helpers::AssetTagHelper
-  include ActiveSupport
-  include ActionController::PolymorphicRoutes if defined?(ActionController::PolymorphicRoutes)
+  def mock_main_model
+    parent = ::ParentModel.new
+    parent.mock_column(:test_attribute)
+    ::ParentModel.stub(:content_columns).and_return([mock('column', :name => 'test_attribute')])
+    parent.save(42)
 
-  include Formtastic::Helpers::FormHelper
+    main = ::MainModel.new
+    main.mock_column(:test_attribute)
+    ::MainModel.stub(:content_columns).and_return([mock('column', :name => 'test_attribute')])
+    main.stub(:parent_model).and_return(parent)
+    main.stub(:parent_model_id).and_return(parent.id)
+
+    main
+  end
 
   def default_input_type(column_type, column_name = :generic_column_name)
     @new_post.stub!(column_name)
@@ -34,7 +27,7 @@ module Mocks
   end
 
   def active_model_validator(kind, attributes, options = {})
-    validator = mock("ActiveModel::Validations::#{kind.to_s.titlecase}Validator", :attributes => attributes, :options => options)
+    validator = mock("ActiveModel::Validations::#{kind.to_s.camelize}Validator", :attributes => attributes, :options => options)
     validator.stub!(:kind).and_return(kind)
     validator
   end
@@ -55,104 +48,6 @@ module Mocks
     active_model_validator(:numericality, attributes, options)
   end
 
-  class ::MongoPost
-    include MongoMapper::Document if defined?(MongoMapper::Document)
-
-    def id
-    end
-
-    def persisted?
-    end
-  end
-
-
-  class ::Post
-    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-
-    def id
-    end
-
-    def persisted?
-    end
-  end
-
-  module ::Namespaced
-    class Post
-      extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-      include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-
-      def id
-      end
-
-      def persisted?
-      end
-    end
-  end
-
-  class ::Author
-    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-
-    def to_label
-    end
-
-    def persisted?
-    end
-  end
-
-  class ::HashBackedAuthor < Hash
-    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-    def persisted?; false; end
-    def name
-      'hash backed author'
-    end
-  end
-
-  class ::Continent
-    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-  end
-
-  class ::PostModel
-    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
-    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
-  end
-
-  ##
-  # We can't mock :respond_to?, so we need a concrete class override
-  class ::MongoidReflectionMock < RSpec::Mocks::Mock
-    def initialize(name=nil, stubs_and_options={})
-      super name, stubs_and_options
-    end
-
-    def respond_to?(sym)
-      sym == :options ? false : super
-    end
-  end
-
-  def _routes
-    url_helpers = mock('url_helpers')
-    url_helpers.stub!(:hash_for_posts_path).and_return({})
-    url_helpers.stub!(:hash_for_post_path).and_return({})
-    url_helpers.stub!(:hash_for_post_models_path).and_return({})
-    url_helpers.stub!(:hash_for_authors_path).and_return({})
-
-    mock('_routes',
-      :url_helpers => url_helpers,
-      :url_for => "/mock/path"
-    )
-  end
-
-  def controller
-    mock('controller', :controller_path= => '', :params => {})
-  end
-
-  def default_url_options
-    {}
-  end
-
   def mock_everything
 
     # Resource-oriented styles like form_for(@post) will expect a path method for the object,
@@ -166,6 +61,7 @@ module Mocks
     def author_path(*args); "/authors/1"; end
     def authors_path(*args); "/authors"; end
     def new_author_path(*args); "/authors/new"; end
+
 
     @fred = ::Author.new
     @fred.stub!(:class).and_return(::Author)
@@ -373,19 +269,79 @@ module Mocks
 
   end
 
-  def self.included(base)
-    base.class_eval do
+  class ::MongoPost
+    include MongoMapper::Document if defined?(MongoMapper::Document)
 
-      attr_accessor :output_buffer
+    def id
+    end
 
-      def protect_against_forgery?
-        false
+    def persisted?
+    end
+  end
+
+
+  class ::Post
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+
+    def id
+    end
+
+    def persisted?
+    end
+  end
+
+  module ::Namespaced
+    class Post
+      extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+      include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+
+      def id
       end
 
-      def _helpers
-        FakeHelpersModule
+      def persisted?
       end
+    end
+  end
 
+  class ::Author
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+
+    def to_label
+    end
+
+    def persisted?
+    end
+  end
+
+  class ::HashBackedAuthor < Hash
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+    def persisted?; false; end
+    def name
+      'hash backed author'
+    end
+  end
+
+  class ::Continent
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+  end
+
+  class ::PostModel
+    extend ActiveModel::Naming if defined?(ActiveModel::Naming)
+    include ActiveModel::Conversion if defined?(ActiveModel::Conversion)
+  end
+
+  # We can't mock :respond_to?, so we need a concrete class override
+  class ::MongoidReflectionMock < RSpec::Mocks::Mock
+    def initialize(name=nil, stubs_and_options={})
+      super name, stubs_and_options
+    end
+
+    def respond_to?(sym)
+      sym == :options ? false : super
     end
   end
 

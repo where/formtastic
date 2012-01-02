@@ -1,26 +1,26 @@
 shared_examples_for "a wrapped input" do
 
   it "wraps the input in a list item" do
-    should have_wrapper.with_id("post_created_at_input").and_class(input_type)
+    should have_wrapper.with_id("main_model_test_attribute_input").and_class(input_type)
   end
 
-  with_no_object :post do
+  with_no_object do
     it "wraps the input in a list item" do
-      should have_wrapper.with_id("post_created_at_input").and_class(input_type)
+      should have_wrapper.with_id("main_model_test_attribute_input").and_class(input_type)
     end
 
     it_behaves_like "an input with no errors"
   end
 
-  with_namespace :context2 do
+  with_namespace(:context2) do
     it "customises the wrapper id" do
-      should have_wrapper.with_id("context2_post_created_at_input")
+      should have_wrapper.with_id("context2_main_model_test_attribute_input")
     end
   end
 
-  with_index :author, :created_at, 3 do
+  with_index(3) do
     it "indexes the id of the wrapper" do
-      should have_wrapper.with_id("post_author_attributes_3_created_at_input")
+      should have_wrapper.with_id("main_model_parent_model_attributes_3_test_attribute_input")
     end
   end
 
@@ -31,7 +31,7 @@ shared_examples_for "a wrapped input" do
       mock('errors').tap do |errors|
         errors.stub!(:[]).with(input_attribute).and_return(attribute_errors)
         Formtastic::FormBuilder.file_metadata_suffixes.each do |suffix|
-          errors.stub!(:[]).with("created_at_#{suffix}".to_sym).and_return(nil)
+          errors.stub!(:[]).with("test_attribute_#{suffix}".to_sym).and_return(nil)
         end
       end
     end

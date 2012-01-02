@@ -15,6 +15,7 @@ require "ammeter/init"
 
 require "rspec_tag_matchers"
 
+require "#{File.dirname(__FILE__)}/support/mocks/mock_model"
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories in alphabetic order.
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each {|f| require f}
@@ -28,6 +29,8 @@ RSpec.configure do |config|
   config.include CustomMatchers
   config.include CustomMacros
   config.include HelperMethods
+
+  config.include Template
   
   config.before(:all) do
     DeferredGarbageCollection.start unless ENV["DEFER_GC"] == "false"

@@ -4,7 +4,7 @@ shared_examples_for "an input" do
 
   it_behaves_like "a labelled input"
 
-  with_no_object :post do
+  with_no_object do
     it_behaves_like "a labelled input"
   end
 
@@ -46,19 +46,19 @@ shared_examples_for "an input" do
 
   end
 
-  with_namespace :context2 do
+  with_namespace(:context2) do
     it "customises the input id" do
-      should have_input.with_id("context2_post_created_at")
+      should have_input.with_id("context2_main_model_test_attribute")
     end
 
     it "customises the label for attribute" do
-      should have_label.for("context2_post_created_at")
+      should have_label.for("context2_main_model_test_attribute")
     end
   end
 
-  with_index :author, :created_at, 3 do
+  with_index(3) do
     it "indexes the id and name of the input tag" do
-      should have_input.with_id("post_author_attributes_3_created_at").and_name("post[author_attributes][3][created_at]")
+      should have_input.with_id("main_model_parent_model_attributes_3_test_attribute").and_name("main_model[parent_model_attributes][3][test_attribute]")
     end    
   end
 
