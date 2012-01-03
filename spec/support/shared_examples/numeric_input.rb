@@ -1,7 +1,7 @@
 # encoding: utf-8
 shared_examples_for "a numeric input" do
 
-  it_behaves_like "an input"
+  it_behaves_like "a basic input"
 
   it "applies numeric and stringish classes to the wrapper" do
     should have_wrapper.with_classes(:numeric, :stringish)

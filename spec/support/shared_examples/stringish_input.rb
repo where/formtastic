@@ -1,7 +1,7 @@
 # encoding: utf-8
 shared_examples_for "a stringish input" do
 
-  it_behaves_like "an input"
+  it_behaves_like "a basic input"
   it_behaves_like "an input with placeholder"
 
   it "applies stringish class to the wrapper" do

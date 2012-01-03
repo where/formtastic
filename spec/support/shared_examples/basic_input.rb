@@ -1,8 +1,7 @@
 # encoding: utf-8
-shared_examples_for "an input" do
+shared_examples_for "a basic input" do
 
   it_behaves_like "a wrapped input"
-
   it_behaves_like "a labelled input"
 
   with_no_object do

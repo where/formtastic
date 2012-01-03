@@ -3,6 +3,6 @@ require 'spec_helper'
 
 describe_input :time_zone, :element => :select do
 
-  it_behaves_like "an input"
+  it_behaves_like "a basic input"
   
 end

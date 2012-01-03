@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe_input :text, :element => :textarea do
 
-  it_behaves_like "an input"
+  it_behaves_like "a basic input"
   it_behaves_like "an input with placeholder"
 
   [:cols, :rows].each do |attribute|
