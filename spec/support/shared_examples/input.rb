@@ -1,3 +1,4 @@
+# encoding: utf-8
 shared_examples_for "an input" do
 
   it_behaves_like "a wrapped input"

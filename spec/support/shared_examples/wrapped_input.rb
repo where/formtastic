@@ -1,3 +1,4 @@
+# encoding: utf-8
 shared_examples_for "a wrapped input" do
 
   it "wraps the input in a list item" do
@@ -29,7 +30,7 @@ shared_examples_for "a wrapped input" do
     
     let(:errors) do
       mock('errors').tap do |errors|
-        errors.stub!(:[]).with(input_attribute).and_return(attribute_errors)
+        errors.stub!(:[]).with(:test_attribute).and_return(attribute_errors)
         Formtastic::FormBuilder.file_metadata_suffixes.each do |suffix|
           errors.stub!(:[]).with("test_attribute_#{suffix}".to_sym).and_return(nil)
         end

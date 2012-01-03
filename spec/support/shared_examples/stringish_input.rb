@@ -1,3 +1,4 @@
+# encoding: utf-8
 shared_examples_for "a stringish input" do
 
   it_behaves_like "an input"
@@ -8,7 +9,7 @@ shared_examples_for "a stringish input" do
   end
 
   describe "maxlength attribute" do
-    before { model_object.stub(:column_for_attribute).with(input_attribute).and_return(mock('column', :type => :string, :limit => 50)) }
+    before { set_column_type(:string, :limit => 50) }
 
     describe "when :maxlength not provided" do
       it "is equal to the column limit" do

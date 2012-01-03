@@ -7,6 +7,7 @@ require "active_model"
 require "active_support"
 require "action_view"
 require "action_controller"
+ActiveSupport::Deprecation.silenced = false
 
 require File.expand_path(File.join(File.dirname(__FILE__), "../lib/formtastic/util"))
 require File.expand_path(File.join(File.dirname(__FILE__), "../lib/formtastic"))
@@ -15,29 +16,34 @@ require "ammeter/init"
 
 require "rspec_tag_matchers"
 
-require "#{File.dirname(__FILE__)}/support/mocks/mock_model"
+support_dir = "#{File.dirname(__FILE__)}/support"
+
+require "#{support_dir}/mocks/mock_model"
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories in alphabetic order.
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].sort.each {|f| require f}
+Dir["#{support_dir}/**/*.rb"].sort.each {|f| require f}
 
-::ActiveSupport::Deprecation.silenced = false
+include CustomDSL
 
 RSpec.configure do |config|
   config.mock_with :rspec
 
-  config.include RspecTagMatchers
-  config.include CustomMatchers
-  config.include CustomMacros
-  config.include HelperMethods
-
+  config.include Mocks
   config.include Template
-  
+  config.include HelperMethods
+  config.include CustomMatchers
+  config.extend  CustomMacros
+
   config.before(:all) do
     DeferredGarbageCollection.start unless ENV["DEFER_GC"] == "false"
   end
   config.after(:all) do
     DeferredGarbageCollection.reconsider unless ENV["DEFER_GC"] == "false"
   end
+  
+  # legacy
+  config.include RspecTagMatchers
+  config.include LegacyMacros
 end
 
 require "action_controller/railtie"
@@ -57,8 +63,4 @@ require "rspec/rails"
 # Quick hack to avoid the 'Spec' deprecation warnings from rspec_tag_matchers
 module Spec
   include RSpec
-end
-
-module FormtasticSpecHelper
-  include Mocks
 end
