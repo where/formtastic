@@ -9,7 +9,7 @@ module Mocks
     end
 
     def mock_column(name, options={})
-      options.reverse_merge!(:type => 'string')
+      options.reverse_merge!(:type => :string)
       stub(name)
       stub(:"#{name}=")
       stub(:column_for_attribute).with(name).and_return(mock('column', options))
