@@ -444,8 +444,10 @@ describe 'Formtastic::FormBuilder#input' do
           default_input_type(:decimal).should == :number
         end
 
-        it 'should default to :country for :string columns named country' do
+        it 'should default to :country for :string columns ending with country' do
           default_input_type(:string, :country).should == :country
+          default_input_type(:string, :home_country).should == :country
+          default_input_type(:string, :country_code).should == :string
         end
 
         it 'should default to :email for :string columns matching email' do
