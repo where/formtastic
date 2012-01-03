@@ -54,7 +54,7 @@ module Formtastic
             validation.kind == :length
           end
           if validation
-            validation.options[:maximum] || (validation.options[:within].present? ? validation.options[:within].max : nil)
+            validation.options[:is] || validation.options[:maximum] || validation.options[:within].try(:max) || validation.options[:in].try(:max)
           else
             nil
           end
