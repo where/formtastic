@@ -10,7 +10,7 @@ module CustomDSL
       
       let(:model_object) { options[:model_object] || mock_main_model }
       let(:input_element) { options[:element] || :input }
-      let(:html_type) { options.key?(:type) ? options[:type] : input_type }
+      let(:html_type) { options.key?(:type) ? options[:type] : (input_type if input_element == :input) }
       let(:input_type) { input_type }
 
       subject { render_input }

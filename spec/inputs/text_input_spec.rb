@@ -1,7 +1,7 @@
 # encoding: utf-8
 require 'spec_helper'
 
-describe_input :text, :element => :textarea, :type => nil do
+describe_input :text, :element => :textarea do
 
   it_behaves_like "an input"
   it_behaves_like "an input with placeholder"
