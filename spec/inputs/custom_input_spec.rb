@@ -28,25 +28,24 @@ module TestInputs
   
 end
 
-describe 'AnyCustomInput' do
+describe "AnyCustomInput" do
   
   include TestInputs
   
   describe "#to_html" do
 
-    describe 'without an implementation' do
-      it "should raise a NotImplementedError exception" do
-        expect { ::UnimplementedInput.new(*input_args).to_html }.to raise_error(NotImplementedError)
+    describe "without an implementation" do
+      it "raises a NotImplementedError" do
+        expect { UnimplementedInput.new(*input_args).to_html }.to raise_error(NotImplementedError)
       end
     end    
 
-    describe 'with an implementation' do
-      it "should raise a NotImplementedError exception" do
-        expect { ::ImplementedInput.new(*input_args).to_html }.to_not raise_error(NotImplementedError)
+    describe "with an implementation" do
+      it "does not raise a NotImplementedError exception" do
+        expect { ImplementedInput.new(*input_args).to_html }.not_to raise_error(NotImplementedError)
       end
     end
     
   end
     
 end
-
