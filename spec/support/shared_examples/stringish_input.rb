@@ -101,18 +101,6 @@ shared_examples_for "a stringish input" do
       end
     end
 
-    [:in, :within].each do |range|
-      with_length_validator(range => 24..42) do
-        when_applicable_it "adds a maxlength attribute equal to the validation" do
-          should have_input.with_maxlength(42)
-        end
-
-        when_not_applicable_it "retains the default maxlength" do
-          should have_input.with_maxlength(50)
-        end
-      end
-    end
-
   end
 
 end
