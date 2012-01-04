@@ -30,7 +30,7 @@ shared_examples_for "a numeric input" do
           before { set_column_type(column_type) }
           
           it "raises an error" do
-            expect{ render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMinimumAttributeError)
+            expect { render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMinimumAttributeError)
           end
         end
       end
@@ -39,7 +39,7 @@ shared_examples_for "a numeric input" do
         before { set_column_type(nil) }
 
         it "raises an error" do
-          expect{ render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMinimumAttributeError)
+          expect { render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMinimumAttributeError)
         end
       end
     end
@@ -86,7 +86,7 @@ shared_examples_for "a numeric input" do
           before { set_column_type(column_type) }
           
           it "raises an error" do
-            expect{ render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMaximumAttributeError)
+            expect { render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMaximumAttributeError)
           end
         end
       end
@@ -95,7 +95,7 @@ shared_examples_for "a numeric input" do
         before { set_column_type(nil) }
 
         it "raises an error" do
-          expect{ render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMaximumAttributeError)
+          expect { render_input }.to raise_error(Formtastic::Inputs::Base::Validations::IndeterminableMaximumAttributeError)
         end
       end
 

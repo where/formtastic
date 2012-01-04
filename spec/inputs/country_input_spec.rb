@@ -6,7 +6,7 @@ describe_input :country, :element => :select do
   without_country_select_installed do
 
     it "raises an error suggesting the author installs a plugin" do
-      expect{ render_input }.to raise_error(RuntimeError, /please install a country_select plugin/)
+      expect { render_input }.to raise_error(RuntimeError, /please install a country_select plugin/)
     end
 
   end
