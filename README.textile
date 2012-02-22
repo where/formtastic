@@ -393,7 +393,7 @@ Basic localization (labels only, with ActiveRecord):
 
 h3. Enhanced Localization (Formtastic I18n API)
 
-Formtastic supports localized *labels*, *hints*, *legends*, *actions* using the I18n API for more advanced usage. Your forms can now be DRYer and more flexible than ever, and still fully localized. This is how:
+Formtastic supports localized *labels*, *hints*, *intros*, *legends*, *actions* using the I18n API for more advanced usage. Your forms can now be DRYer and more flexible than ever, and still fully localized. This is how:
 
 *1. Enable I18n lookups by default (@config/initializers/formtastic.rb@):*
 
@@ -418,6 +418,9 @@ Formtastic supports localized *labels*, *hints*, *legends*, *actions* using the 
         post:
           title: "Choose a good title for your post."
           body: "Write something inspiring here."
+      intros:
+        user:
+          login: "Choose a login name for your account"
       placeholders:
         post:
           title: "Title your post"

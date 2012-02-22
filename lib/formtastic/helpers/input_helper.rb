@@ -125,6 +125,9 @@ module Formtastic
       # @option options :hint [String, Symbol, false]
       #   Override hint text
       #
+      # @option options :intro [String, Symbol, false]
+      #   Override intro text
+      #
       # @option options :required [Boolean]
       #   Override to mark the input as required (or not) — adds a required/optional class to the wrapper, and a HTML5 required attribute to the `<input>`
       #
@@ -170,7 +173,7 @@ module Formtastic
       # @todo Can we kill `:hint_class` & `:error_class`? What's the use case for input-by-input? Shift to config or burn!
       # @todo Can we kill `:group_by` & `:group_label`? Should be done with :collection => grouped_options_for_select(...)
       # @todo Can we kill `:find_options`? Should be done with MyModel.some_scope.where(...).order(...).whatever_scope
-      # @todo Can we kill `:label`, `:hint` & `:prompt`? All strings could be shifted to i18n!
+      # @todo Can we kill `:label`, `:hint` & `:prompt` & `:intro`? All strings could be shifted to i18n!
       #
       # @example Accept all default options
       #   <%= f.input :title %>
@@ -189,6 +192,12 @@ module Formtastic
       #
       # @example Disabling the hint with false, even if an i18n translation exists
       #   <%= f.input :title, :hint => false  %>
+      #
+      # @example Changing or adding an intro with a String
+      #   <%= f.input :title, :intro => "A title is important because..." %>
+      #
+      # @example Disabling the intro with false, even if an i18n translation exists
+      #   <%= f.input :title, :intro => false  %>
       #
       # @example Marking a field as required or not (even if validations do not enforce it)
       #   <%= f.input :title, :required => true  %>

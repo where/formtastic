@@ -40,6 +40,7 @@ module Formtastic
       autoload :Fileish
       autoload :GroupedCollections
       autoload :Hints
+      autoload :Intros
       autoload :Html
       autoload :Labelling
       autoload :Naming
@@ -56,6 +57,7 @@ module Formtastic
       include Database
       include Errors
       include Hints
+      include Intros
       include Naming
       include Validations
       include Fileish

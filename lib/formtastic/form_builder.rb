@@ -30,6 +30,7 @@ module Formtastic
     configure :default_inline_error_class, 'inline-errors'
     configure :default_error_list_class, 'errors'
     configure :default_hint_class, 'inline-hints'
+    configure :default_intro_class, 'intro'
     configure :use_required_attribute, false
     configure :perform_browser_validations, false
 

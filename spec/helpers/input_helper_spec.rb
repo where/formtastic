@@ -790,6 +790,110 @@ describe 'Formtastic::FormBuilder#input' do
 
     end
 
+    describe ':intro option' do
+
+      describe 'when a string' do
+        let(:intro) { "some introductory text for the input" }
+        
+        it 'should be passed down to the paragraph tag' do
+          concat(semantic_form_for(@new_post) do |builder|
+            concat(builder.input(:title, :intro => intro))
+          end)
+          output_buffer.should have_tag("form li p.intro", intro)
+        end
+      end
+      
+      describe 'when true' do
+        
+        before do
+          @localized_intro_text = "This is the localized intro."
+          @default_localized_intro_text = "This is the default localized intro."
+        end
+        
+        after do
+          ::I18n.backend.reload!
+        end
+        
+        describe 'and generic localization is provided' do
+          
+          it 'should render an intro paragraph containing the localized intro' do
+            with_config :i18n_lookups_by_default, false do
+              ::I18n.backend.store_translations :en,
+              :formtastic => {
+                  :intros => {
+                    :title => @default_localized_intro_text,
+                   }
+                }
+              concat(semantic_form_for(@new_post) do |builder|
+                concat(builder.input(:title, :intro => true))
+              end)
+              output_buffer.should have_tag('form li p.intro', @default_localized_intro_text)
+            end
+          end
+          
+        end
+        
+        describe "and specific localization is provided" do
+					it 'should render an into paragraph containing a specific intro' do
+            with_config :i18n_lookups_by_default, false do
+              ::I18n.backend.store_translations :en,
+              :formtastic => {
+                  :intros => {
+                    :title => @default_localized_intro_text,
+                    :post => {
+                      :title => @localized_intro_text
+                     }
+                  }
+                }
+              concat(semantic_form_for(@new_post) do |builder|
+                concat(builder.input(:title, :intro => true))
+              end)
+              output_buffer.should have_tag('form li p.intro', @localized_intro_text)
+            end
+          end
+        end
+        
+        describe "and no translations exist" do
+          it 'should not render an intro paragraph' do
+            concat(semantic_form_for(@new_post) do |builder|
+              concat(builder.input(:title, :intro => true))
+            end)
+            output_buffer.should_not have_tag('form li p.intro')
+          end
+        end
+        
+      end
+      
+      describe "when false" do
+        it "should not render an intro paragraph, even if a translation exists" do
+          ::I18n.backend.store_translations :en,
+          :formtastic => {
+              :intros => {
+                :title => @default_localized_intro_text,
+                :post => {
+                  :title => @localized_intro_text
+                 }
+              }
+            }
+          with_config :i18n_lookups_by_default, false do
+            concat(semantic_form_for(@new_post) do |builder|
+              concat(builder.input(:title, :intro => false))
+            end)
+            output_buffer.should_not have_tag('form li p.intro')
+          end
+        end
+      end
+      
+      describe "when not provided and translation exists and lookups should be performed" do
+        # TODO
+      end
+      
+      describe "when not provided and translation exists and lookups should not be performed" do
+        # TODO
+      end
+      
+    end
+
     describe ':wrapper_html option' do
 
       describe 'when provided' do

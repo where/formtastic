@@ -168,6 +168,15 @@ This stylesheet forms part of the Formtastic Rails Plugin
 }
 
 
+/* INLINE INTRO
+--------------------------------------------------------------------------------------------------*/
+.formtastic .input .intro {
+  color:#000;
+  font-weight:bold;
+  margin:0 0 0.5em 25%;
+}
+
+
 /* INLINE ERRORS
 --------------------------------------------------------------------------------------------------*/
 .formtastic .inline-errors {

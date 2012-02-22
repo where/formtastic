@@ -30,7 +30,6 @@ module Formtastic
       include Base
       include Base::Stringish
       include Base::Placeholder
-      
     end
   end
 end

@@ -12,7 +12,7 @@ module Formtastic
             )
           end
         end
-        
+
         def hint?
           !hint_text.blank? && !hint_text.kind_of?(Hash)
         end
@@ -24,7 +24,7 @@ module Formtastic
         def hint_text_from_options
           options[:hint]
         end
-
+        
       end
     end
   end

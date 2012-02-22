@@ -57,6 +57,10 @@ module Formtastic
         ""
       end
       
+      def intro_html
+        ""
+      end
+      
       def hint?
         false
       end
