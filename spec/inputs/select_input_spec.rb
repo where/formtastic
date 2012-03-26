@@ -316,7 +316,26 @@ describe 'select input' do
       end
     end
   end
+  
+  describe 'for a has_one association' do
+    before do
+      ::Post.stub!(:reflect_on_association).with(:author).and_return do
+        mock = mock('reflection', :options => {}, :klass => ::Author, :macro => :has_one)
+        mock
+      end
+    end
 
+    it "should render some Authors as options" do
+      concat(semantic_form_for(@new_post) do |builder|
+        concat(builder.input(:author, :as => :select))
+      end)
+      output_buffer.should have_tag("li#post_author_input")
+      output_buffer.should have_tag("label", /Author/)
+      output_buffer.should have_tag("select[name='post[author_id]']")
+      output_buffer.should have_tag("select option", "Fred Smith")
+    end
+  end
+  
   describe 'for a has_many association' do
     before do
       concat(semantic_form_for(@fred) do |builder|
