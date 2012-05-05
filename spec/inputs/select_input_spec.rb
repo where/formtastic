@@ -320,7 +320,7 @@ describe 'select input' do
   describe 'for a has_one association' do
     before do
       ::Post.stub!(:reflect_on_association).with(:author).and_return do
-        mock = mock('reflection', :options => {}, :klass => ::Author, :macro => :has_one)
+        mock = mock('reflection', :options => {}, :klass => ::Author, :macro => :has_one, :foreign_key=>'post_id')
         mock
       end
     end
