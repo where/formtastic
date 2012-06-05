@@ -255,7 +255,7 @@ module CustomMacros
         end
       end
     end
-
+    
     def it_should_call_find_on_association_class_when_no_collection_is_provided(as)
       it "should call find on the association class when no collection is provided" do
         ::Author.should_receive(:where)
